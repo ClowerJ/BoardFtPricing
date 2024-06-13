@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Board Feet Pricing Calculator</title>
+    <style>
+        input[type="number"] {
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Board Feet Pricing Calculator</h2>
+    <label for="thickness">Thickness (in):</label>
+    <input type="number" id="thickness" min="0" step="1.0" onkeyup="checkEnter(event)"><br><br> 
+
+    <label for="width">Width (in):</label>
+    <input type="number" id="width" min="0" step="1.0" onkeyup="checkEnter(event)"><br><br>   
+
+    <label for="length">Length (ft):</label>
+    <input type="number" id="length" min="0" step="1.0" onkeyup="checkEnter(event)"><br><br>
+        
+    <label for="price">Cost MBFT:</label>
+    <input type="number" id="price" min="0" step="1.0" onkeyup="checkEnter(event)"><br><br>
+
+    <label for="margin">Margin added:</label>
+    <input type="number" id="margin" min="0" step="1.0" onkeyup="checkEnter(event)"><br><br>
+    
+    <label for="bunks">Bunk Quantity:</label>
+    <input type="number" id="bunks" min="0" onkeyup="checkEnter(event)"><br><br>
+    
+    <button onclick="calculate()">Calculate</button><br><br>
+    
+    <p id="result"></p>
