@@ -31,3 +31,11 @@
     <button onclick="calculate()">Calculate</button><br><br>
     
     <p id="result"></p>
+
+<script>
+        function calculate() {
+            var length = document.getElementById("length").value;
+            var width = document.getElementById("width").value; // Convert inches to feet
+            var thickness = document.getElementById("thickness").value; // Convert inches to feet
+            var price = document.getElementById("price").value;
+	    var margin = document.getElementById("margin").value;
