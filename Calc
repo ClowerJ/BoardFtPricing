@@ -39,3 +39,9 @@
             var thickness = document.getElementById("thickness").value; // Convert inches to feet
             var price = document.getElementById("price").value;
 	    var margin = document.getElementById("margin").value;
+	    var bunks = document.getElementById("bunks").value;
+	    var adjustedBdFt = (price / ((100 - margin) / 100)).toFixed(4);	
+            var boardFeet = (length * width * thickness / 12).toFixed(3);
+            var piecePrice = ((adjustedBdFt * boardFeet) / 1000).toFixed(2);
+	    var totalPrice = (piecePrice * bunks).toFixed(2);
+
