@@ -45,3 +45,17 @@
             var piecePrice = ((adjustedBdFt * boardFeet) / 1000).toFixed(2);
 	    var totalPrice = (piecePrice * bunks).toFixed(2);
 
+ 	    document.getElementById("result").innerHTML = "Board Feet: " + boardFeet + "<br>Price per thousand: $" + adjustedBdFt + "<br>Price per piece: $" + piecePrice + "<br>Total Price: $" + totalPrice;
+        	
+		}
+		function checkEnter(event) {
+			if (event.keyCode === 13) {
+				calculate();
+			}
+		}
+
+
+    </script>
+
+</html>
+
