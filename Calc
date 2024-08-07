@@ -3,59 +3,107 @@
 <head>
     <title>Board Feet Pricing Calculator</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('https://www.transparenttextures.com/patterns/wood.png') repeat;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+        }
+        h2 {
+            color: #8B4513; /* SaddleBrown */
+        }
+        label {
+            font-size: 1.2em;
+            margin-right: 10px;
+            color: #8B4513; /* SaddleBrown */
+        }
         input[type="number"] {
             width: 100px;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 2px solid #8B4513; /* SaddleBrown */
+            border-radius: 5px;
+            background-color: #f5deb3; /* Wheat */
+            font-size: 1em;
+        }
+        button {
+            background-color: #8B4513; /* SaddleBrown */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #6f4f28; /* Darker brown */
+        }
+        p#result {
+            font-size: 1.2em;
+            margin-top: 20px;
+            padding: 15px;
+            background: url('https://www.transparenttextures.com/patterns/wood-grain.png') repeat, #d4a373; /* Pine color with wood grain texture */
+            border: 2px solid #8B4513; /* SaddleBrown */
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            display: inline-block;
+            text-align: left;
+            width: 80%;
+            max-width: 600px;
+            color: #333; /* Ensure text color contrasts well */
         }
     </style>
 </head>
 <body>
     <h2>Board Feet Pricing Calculator</h2>
-    <label for="thickness">Thickness (in):</label>
-    <input type="number" id="thickness" min="0" step="1.0" onkeyup="checkEnter(event)"><br><br> 
+    <div>
+        <label for="thickness">Thickness (in):</label>
+        <input type="number" id="thickness" min="0" step="1.0" onkeyup="checkEnter(event)"><br><br> 
 
-    <label for="width">Width (in):</label>
-    <input type="number" id="width" min="0" step="1.0" onkeyup="checkEnter(event)"><br><br>   
+        <label for="width">Width (in):</label>
+        <input type="number" id="width" min="0" step="1.0" onkeyup="checkEnter(event)"><br><br>   
 
-    <label for="length">Length (ft):</label>
-    <input type="number" id="length" min="0" step="1.0" onkeyup="checkEnter(event)"><br><br>
+        <label for="length">Length (ft):</label>
+        <input type="number" id="length" min="0" step="1.0" onkeyup="checkEnter(event)"><br><br>
+            
+        <label for="price">Cost MBFT:</label>
+        <input type="number" id="price" min="0" step="1.0" onkeyup="checkEnter(event)"><br><br>
+
+        <label for="margin">Margin added:</label>
+        <input type="number" id="margin" min="0" step="1.0" onkeyup="checkEnter(event)"><br><br>
         
-    <label for="price">Cost MBFT:</label>
-    <input type="number" id="price" min="0" step="1.0" onkeyup="checkEnter(event)"><br><br>
-
-    <label for="margin">Margin added:</label>
-    <input type="number" id="margin" min="0" step="1.0" onkeyup="checkEnter(event)"><br><br>
-    
-    <label for="bunks">Bunk Quantity:</label>
-    <input type="number" id="bunks" min="0" onkeyup="checkEnter(event)"><br><br>
-    
-    <button onclick="calculate()">Calculate</button><br><br>
-    
-    <p id="result"></p>
+        <label for="bunks">Bunk Quantity:</label>
+        <input type="number" id="bunks" min="0" onkeyup="checkEnter(event)"><br><br>
+        
+        <button onclick="calculate()">Calculate</button><br><br>
+        
+        <p id="result"></p>
+    </div>
 
 <script>
-        function calculate() {
-            var length = document.getElementById("length").value;
-            var width = document.getElementById("width").value; // Convert inches to feet
-            var thickness = document.getElementById("thickness").value; // Convert inches to feet
-            var price = document.getElementById("price").value;
-	    var margin = document.getElementById("margin").value;
-	    var bunks = document.getElementById("bunks").value;
-	    var adjustedBdFt = (price / ((100 - margin) / 100)).toFixed(4);	
-            var boardFeet = (length * width * thickness / 12).toFixed(3);
-            var piecePrice = ((adjustedBdFt * boardFeet) / 1000).toFixed(2);
-	    var totalPrice = (piecePrice * bunks).toFixed(2);
+    function calculate() {
+        var length = document.getElementById("length").value;
+        var width = document.getElementById("width").value; // Convert inches to feet
+        var thickness = document.getElementById("thickness").value; // Convert inches to feet
+        var price = document.getElementById("price").value;
+        var margin = document.getElementById("margin").value;
+        var bunks = document.getElementById("bunks").value;
+        var adjustedBdFt = (price / ((100 - margin) / 100)).toFixed(4);    
+        var boardFeet = (length * width * thickness / 12).toFixed(3);
+        var piecePrice = ((adjustedBdFt * boardFeet) / 1000).toFixed(2);
+        var totalPrice = (piecePrice * bunks).toFixed(2);
 
- 	    document.getElementById("result").innerHTML = "Board Feet: " + boardFeet + "<br>Price per thousand: $" + adjustedBdFt + "<br>Price per piece: $" + piecePrice + "<br>Total Price: $" + totalPrice;
-        	
-		}
-		function checkEnter(event) {
-			if (event.keyCode === 13) {
-				calculate();
-			}
-		}
+        document.getElementById("result").innerHTML = "Board Feet: " + boardFeet + "<br>Price per thousand: $" + adjustedBdFt + "<br>Price per piece: $" + piecePrice + "<br>Total Price: $" + totalPrice;
+    }
 
+    function checkEnter(event) {
+        if (event.keyCode === 13) {
+            calculate();
+        }
+    }
+</script>
 
-    </script>
-
+</body>
 </html>
-
