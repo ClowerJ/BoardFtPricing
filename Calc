@@ -84,19 +84,26 @@
 
 <script>
     function calculate() {
-        var length = document.getElementById("length").value;
-        var width = document.getElementById("width").value; // Convert inches to feet
-        var thickness = document.getElementById("thickness").value; // Convert inches to feet
-        var price = document.getElementById("price").value;
-        var margin = document.getElementById("margin").value;
-        var bunks = document.getElementById("bunks").value;
-        var adjustedBdFt = (price / ((100 - margin) / 100)).toFixed(4);    
-        var boardFeet = (length * width * thickness / 12).toFixed(3);
-        var piecePrice = ((adjustedBdFt * boardFeet) / 1000).toFixed(2);
-        var totalPrice = (piecePrice * bunks).toFixed(2);
+    var length = parseFloat(document.getElementById("length").value) || 0;
+    var width = parseFloat(document.getElementById("width").value) || 0;
+    var thickness = parseFloat(document.getElementById("thickness").value) || 0;
+    var price = parseFloat(document.getElementById("price").value) || 0;
+    var margin = parseFloat(document.getElementById("margin").value) || 0;
+    var bunks = parseFloat(document.getElementById("bunks").value) || 0;
 
-        document.getElementById("result").innerHTML = "Board Feet: " + boardFeet + "<br>Price per thousand: $" + adjustedBdFt + "<br>Price per piece: $" + piecePrice + "<br>Total Price: $" + totalPrice;
+    if (length <= 0 || width <= 0 || thickness <= 0 || price <= 0 || bunks < 0) {
+        document.getElementById("result").innerHTML = "Please enter valid values for all fields.";
+        return;
     }
+
+    var adjustedBdFt = (price / ((100 - margin) / 100)).toFixed(4);    
+    var boardFeet = (length * width * thickness / 12).toFixed(3);
+    var piecePrice = ((adjustedBdFt * boardFeet) / 1000).toFixed(2);
+    var totalPrice = (piecePrice * bunks).toFixed(2);
+
+    document.getElementById("result").innerHTML = "Board Feet: " + boardFeet + "<br>Price per thousand: $" + adjustedBdFt + "<br>Price per piece: $" + piecePrice + "<br>Total Price: $" + totalPrice;
+}
+
 
     function checkEnter(event) {
         if (event.keyCode === 13) {
