@@ -13,6 +13,6 @@ Add selector to switch between dimensional lumber and square foot sheeting for p
 
 Change output to interactable fields so you can determine board ft price if you only know piece price
 
-Design a theme or background to move beyond minimum viable product
+Design a theme or background to move beyond minimum viable product COMPLETE
 
 Drop down for most common sizes for quicker selection
