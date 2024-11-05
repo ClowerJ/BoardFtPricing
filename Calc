@@ -96,12 +96,12 @@
         return;
     }
 
-    var adjustedBdFt = (price / ((100 - margin) / 100)).toFixed(4);    
-    var boardFeet = (length * width * thickness / 12).toFixed(3);
-    var piecePrice = ((adjustedBdFt * boardFeet) / 1000).toFixed(2);
+    var adjustedBdFt = (price / ((100 - margin) / 100));    
+    var boardFeet = (length * width * thickness / 12);
+    var piecePrice = ((adjustedBdFt * boardFeet) / 1000);
     var totalPrice = (piecePrice * bunks).toFixed(2);
 
-    document.getElementById("result").innerHTML = "Board Feet: " + boardFeet + "<br>Price per thousand: $" + adjustedBdFt + "<br>Price per piece: $" + piecePrice + "<br>Total Price: $" + totalPrice;
+    document.getElementById("result").innerHTML = "Board Feet: " + boardFeet.toFixed(2) + "<br>Price per thousand: " + adjustedBdFt + "/m" + "<br>Price per piece: $" + piecePrice.toFixed(2) + "<br>Total Price: $" + totalPrice;
 }
 
 
