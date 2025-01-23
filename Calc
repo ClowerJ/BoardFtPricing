@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Board Feet Pricing Calculator</title>
+    <title>Dynamic BFT Calc</title>		
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: url('https://www.transparenttextures.com/patterns/wood.png') repeat;
+            background: url('https://www.transparenttextures.com/patterns/wood.png') repeat; /* jclowers 12-6-2024 */
             color: #333;
             text-align: center;
             padding: 20px;
@@ -18,99 +18,237 @@
             margin-right: 10px;
             color: #8B4513; /* SaddleBrown */
         }
-        input[type="number"] {
-            width: 100px;
+        input[type="number"], select {
+            width: 150px;
             padding: 8px;
             margin-bottom: 10px;
             border: 2px solid #8B4513; /* SaddleBrown */
             border-radius: 5px;
             background-color: #f5deb3; /* Wheat */
             font-size: 1em;
+	    box-sizing: border-box; /* Ensures padding does not affect total width/height */
         }
-        button {
-            background-color: #8B4513; /* SaddleBrown */
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 1.2em;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+        .form-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
         }
-        button:hover {
-            background-color: #6f4f28; /* Darker brown */
+        .form-group label {
+            width: 150px;
+            text-align: right;
+            margin-right: 10px;
         }
         p#result {
-            font-size: 1.2em;
-            margin-top: 20px;
-            padding: 15px;
-            background: url('https://www.transparenttextures.com/patterns/wood-grain.png') repeat, #d4a373; /* Pine color with wood grain texture */
-            border: 2px solid #8B4513; /* SaddleBrown */
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            display: inline-block;
-            text-align: left;
-            width: 80%;
-            max-width: 600px;
-            color: #333; /* Ensure text color contrasts well */
+    		font-size: 1.2em;
+    		margin-top: 20px;
+    		padding: 15px;
+    		background: url('https://www.transparenttextures.com/patterns/wood-grain.png') repeat, #d4a373; /* Pine color with wood grain texture */
+   		border: 2px solid #8B4513; /* SaddleBrown */
+   		border-radius: 5px;
+   		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+   		display: inline-block;
+   		text-align: left;
+   		width: 80%;
+   		max-width: 600px;
+   		color: #333; /* Ensure text color contrasts well */
+   		margin-left: auto;
+   		margin-right: auto; /* Centers the result box */
+}
+
+	@media (max-width: 600px) {
+		input[type="number"], select {
+        		width: 100%; /* Make fields take full width on small screens */
         }
+
+        /* Optional: Adjust font sizes or other properties for better mobile layout */
+        label {
+            font-size: 1em;
+        }
+
+        p#result {
+            width: 90%; /* Adjust result box width for smaller screens */
+        }
+    }
     </style>
 </head>
 <body>
     <h2>Board Feet Pricing Calculator</h2>
     <div>
-        <label for="thickness">Thickness (in):</label>
-        <input type="number" id="thickness" min="0" step="1.0" onkeyup="checkEnter(event)"><br><br> 
+        <div class="form-group">
+            <label for="thickness">Thickness (in):</label>
+            <input type="number" id="thickness" min="0" step="1.0">
+        </div> 
 
-        <label for="width">Width (in):</label>
-        <input type="number" id="width" min="0" step="1.0" onkeyup="checkEnter(event)"><br><br>   
+        <div class="form-group">
+            <label for="width">Width (in):</label>
+            <input type="number" id="width" min="0" step="1.0">
+        </div>   
 
-        <label for="length">Length (ft):</label>
-        <input type="number" id="length" min="0" step="1.0" onkeyup="checkEnter(event)"><br><br>
+        <div class="form-group">
+            <label for="length">Length (ft):</label>
+            <input type="number" id="length" min="0" step="1.0">
+        </div>
+
+        <div class="form-group">
+            <label for="price">Cost:</label>
+            <input type="number" id="price" min="0" step="0.01">
+        </div>
             
-        <label for="price">Cost MBFT:</label>
-        <input type="number" id="price" min="0" step="1.0" onkeyup="checkEnter(event)"><br><br>
+        <div class="form-group">
+            <label for="costType">Cost Type:</label>
+            <select id="costType">
+                <option value="mbft">MBFT Cost</option>
+                <option value="piece">Piece Cost</option>
+            </select>
+        </div>
 
-        <label for="margin">Margin added:</label>
-        <input type="number" id="margin" min="0" step="1.0" onkeyup="checkEnter(event)"><br><br>
+        <div class="form-group">
+            <label for="margin">Margin added (%):</label>
+            <input type="number" id="margin" min="0" step="1.0">
+        </div>
         
-        <label for="bunks">Bunk Quantity:</label>
-        <input type="number" id="bunks" min="0" onkeyup="checkEnter(event)"><br><br>
-        
-        <button onclick="calculate()">Calculate</button><br><br>
+        <div class="form-group">
+            <label for="bunks">Bunk Quantity:</label>
+            <input type="number" id="bunks" min="0">
+        </div>
         
         <p id="result"></p>
+        </div>
+	
+	<div id="dino-game" style="display: none; margin-top: 20px; text-align: center;">
+    <div style="max-width: 600px; margin: 0 auto;">
+        <iframe src="https://chromedino.com/" frameborder="0" scrolling="no" width="100%" height="400" loading="lazy"></iframe>
     </div>
+</div>
+
+
+
 
 <script>
     function calculate() {
-    var length = parseFloat(document.getElementById("length").value) || 0;
-    var width = parseFloat(document.getElementById("width").value) || 0;
-    var thickness = parseFloat(document.getElementById("thickness").value) || 0;
-    var price = parseFloat(document.getElementById("price").value) || 0;
-    var margin = parseFloat(document.getElementById("margin").value) || 0;
-    var bunks = parseFloat(document.getElementById("bunks").value) || 0;
+        var length = parseFloat(document.getElementById("length").value) || 0;
+        var width = parseFloat(document.getElementById("width").value) || 0;
+        var thickness = parseFloat(document.getElementById("thickness").value) || 0;
+        var price = parseFloat(document.getElementById("price").value) || 0;
+        var margin = parseFloat(document.getElementById("margin").value) || 0;
+        var bunks = parseFloat(document.getElementById("bunks").value) || 0;
+        var costType = document.getElementById("costType").value;
 
-    if (length <= 0 || width <= 0 || thickness <= 0 || price <= 0 || bunks < 0) {
-        document.getElementById("result").innerHTML = "Please enter valid values for all fields.";
-        return;
+        if (length <= 0 || width <= 0 || thickness <= 0 || price <= 0) {
+            document.getElementById("result").innerHTML = "Please enter valid positive values for all fields.";
+            return;
+        }
+
+        // Calculate board feet
+        var boardFeet = (length * width * thickness) / 12;
+
+        // Calculate adjusted price per thousand board feet
+        var adjustedBdFt = (costType === "mbft") ? 
+            (price / ((100 - margin) / 100)) : 
+            ((price * 1000) / boardFeet / ((100 - margin) / 100));
+
+        // Calculate price per piece
+        var piecePrice = (adjustedBdFt * boardFeet) / 1000;
+
+        // Calculate total price
+        var totalPrice = piecePrice * bunks;
+
+        // Update results
+        document.getElementById("result").innerHTML = 
+            "Board Feet: " + boardFeet.toFixed(2) + " <br>" +
+            "Price Per Thousand: " + adjustedBdFt.toFixed(2) + "<br>" +
+            "Price Per Piece: $" + piecePrice.toFixed(2) + "<br>" +
+            "Total Price: $" + totalPrice.toFixed(2);
     }
 
-    var adjustedBdFt = (price / ((100 - margin) / 100));    
-    var boardFeet = (length * width * thickness / 12);
-    var piecePrice = ((adjustedBdFt * boardFeet) / 1000);
-    var totalPrice = (piecePrice * bunks).toFixed(2);
+	function checkForEasterEgg() {
+    var code = "111111"; // Set the code that triggers the easter egg
 
-    document.getElementById("result").innerHTML = "Board Feet: " + boardFeet.toFixed(2) + "<br>Price per thousand: " + adjustedBdFt + "/m" + "<br>Price per piece: $" + piecePrice.toFixed(2) + "<br>Total Price: $" + totalPrice;
+    // Get the value of all input fields as strings
+    var thickness = document.getElementById("thickness").value;
+    var width = document.getElementById("width").value;
+    var length = document.getElementById("length").value;
+    var price = document.getElementById("price").value;
+    var margin = document.getElementById("margin").value;
+    var bunks = document.getElementById("bunks").value;
+
+    // Concatenate the inputs to form a single string
+    var inputCode = thickness + width + length + price + margin + bunks;
+
+    // Check if the concatenated input matches the code "dino"
+    if (inputCode === code) {
+        document.getElementById("dino-game").style.display = "block"; // Show the Dino game
+    } else {
+        document.getElementById("dino-game").style.display = "none"; // Hide the Dino game
+    }
 }
 
 
-    function checkEnter(event) {
-        if (event.keyCode === 13) {
-            calculate();
+
+
+    // Attach event listeners for real-time updates
+    const inputs = document.querySelectorAll("input[type='number'], select");
+    inputs.forEach(input => input.addEventListener("input", calculate));
+    inputs.forEach(input => input.addEventListener("input", checkForEasterEgg));
+
+        // Konami Code Sequence: Up, Up, Down, Down, Left, Right, Left, Right
+    const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight'];
+    let konamiInput = [];
+
+    // Listen for keydown events
+    document.addEventListener('keydown', function(event) {
+        // Push the key pressed to the konamiInput array
+        konamiInput.push(event.key);
+
+        // Check if the input matches the Konami code
+        if (konamiInput.toString().includes(konamiCode.toString())) {
+            showEasterEgg(); // If the code is matched, show the easter egg
+            konamiInput = []; // Reset the input
+        }
+
+        // Keep the array size within the length of the Konami code
+        if (konamiInput.length > konamiCode.length) {
+            konamiInput.shift(); // Remove the first element if the array gets too long
+        }
+
+        // Detect spacebar press to remove the message
+        if (event.key === ' ') {
+            removeEasterEgg();
+        }
+    });
+
+    // Function to show the easter egg (large diagonal text)
+    function showEasterEgg() {
+        const message = "You must be really board.";
+
+        // Create a div for the message
+        const easterEggText = document.createElement('div');
+        easterEggText.id = 'easterEggText';
+        easterEggText.style.position = 'fixed';
+        easterEggText.style.top = '50%';
+        easterEggText.style.left = '50%';
+        easterEggText.style.transform = 'translate(-50%, -50%) rotate(-45deg)'; // Diagonal rotation
+        easterEggText.style.fontSize = '150px';
+        easterEggText.style.fontFamily = 'Arial, sans-serif';
+        easterEggText.style.color = 'rgba(0, 0, 0, 0.8)';
+        easterEggText.style.zIndex = '9999'; // Make sure it is on top of everything
+        easterEggText.style.textAlign = 'center';
+        easterEggText.style.pointerEvents = 'none'; // Prevent interference with other elements
+
+        easterEggText.innerText = message;
+
+        // Append the message to the body
+        document.body.appendChild(easterEggText);
+    }
+
+    // Function to remove the easter egg (message)
+    function removeEasterEgg() {
+        const easterEggText = document.getElementById('easterEggText');
+        if (easterEggText) {
+            easterEggText.remove(); // Remove the message from the screen
         }
     }
 </script>
-
 </body>
 </html>
