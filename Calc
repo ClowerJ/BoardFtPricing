@@ -157,7 +157,7 @@
         // Update results
         document.getElementById("result").innerHTML = 
             "Board Feet: " + boardFeet.toFixed(2) + " <br>" +
-            "Price Per Thousand: " + adjustedBdFt.toFixed(2) + "<br>" +
+            "Price Per Thousand: " + adjustedBdFt.toFixed(4) + "<br>" +
             "Price Per Piece: $" + piecePrice.toFixed(2) + "<br>" +
             "Total Price: $" + totalPrice.toFixed(2);
     }
