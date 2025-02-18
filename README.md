@@ -9,10 +9,13 @@ Output to display board ft, boardft price, piece price, unit total price  COMPLE
 
 To improve or expand:
 
-Add selector to switch between dimensional lumber and square foot sheeting for pricing
 
-Change output to interactable fields so you can determine board ft price if you only know piece price
+Change output to interactable fields so you can determine board ft price if you only know piece price COMPLETE
 
 Design a theme or background to move beyond minimum viable product COMPLETE
 
 Drop down for most common sizes for quicker selection
+
+makes fields dynamic faster results COMPLETE
+
+Added easter eggs COMPLETE
